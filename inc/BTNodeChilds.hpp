@@ -21,12 +21,12 @@ struct BTNode_t : BTNode
     }
 
     // run
-    Status run() noexcept final
+    Status run(Player_t& player) noexcept final
     {
         if( currNodeIt == m_nodes.end() )
             resetSeq();
 
-        auto status = (*currNodeIt)->run();
+        auto status = (*currNodeIt)->run(player);
         if( status == BTNode::Status::SUCCESS )
             priv_succ();
         else if ( status == BTNode::Status::FAIL)

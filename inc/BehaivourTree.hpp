@@ -9,19 +9,17 @@
 // -- BehaivourTree_t
 struct BehaivourTree_t
 {
-    using value_type = std::unique_ptr<BTNode>;
+    using value_type = std::unique_ptr<BTNode, BTNode::Deleter>;
     using NodeStrge_t = std::vector<value_type>;
     using MemoryStrge_t = std::unique_ptr<std::byte[]>;
 
     explicit BehaivourTree_t() noexcept
-    {
+    { }
 
-    }
-
-    void run() noexcept
+    void run(Player_t& player) noexcept
     {
         if( m_nodes.size() == 0) return;
-        m_nodes.back()->run(); // Storing tree backwards (last = root).
+        m_nodes.back()->run(player); // Storing tree backwards (last = root).
     };
 
     template <BTNodeType_t Node_t, typename... param_t>
@@ -35,8 +33,9 @@ struct BehaivourTree_t
             throw std::bad_alloc{};
         }
 
-        auto* pnode = new (m_ptr_res) Node_t{std::forward<param_t>(params)...};
-        return m_nodes.emplace_back( pnode );
+        auto* pnode = new (m_ptr_res) Node_t{ std::forward<param_t>(params)... };
+        m_nodes.emplace_back( pnode );
+        return *pnode;
     }
     
 private:
