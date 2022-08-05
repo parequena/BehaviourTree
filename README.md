@@ -1,7 +1,5 @@
 # Behaivour Tree
 
-This TicTacToe developped by Pablo Requena González using SFML 2.5.2 on Manajro (Arch Linux).
-
 [Twitter](https://twitter.com/conPdePABLO)
 
 [LinkedIn](https://www.linkedin.com/in/parequena/)
