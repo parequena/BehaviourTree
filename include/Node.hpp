@@ -12,31 +12,29 @@ struct Player_t;
 // modify the game context, or game world.
 
 // ------------------------------------------------------------------
-// -- BTNode
-struct BTNode
+// -- Node
+struct Node
 {
-    // BTNode child types.
+    // Node child types.
     enum Childs {
             Sequence // Returns running or fail if one of childs does.
         ,   Selector // Returns success when finding first child that does.
-        };
+    };
 
     // Status.
     enum class Status : std::uint8_t { SUCCESS, FAIL, RUNNING };
 
-    // Ctor.
-    BTNode()          = default;
-    // Dtor.
-    virtual ~BTNode() = default;
+    constexpr explicit Node() noexcept = default;
+    virtual ~Node()           noexcept = default;
 
     // Custom deleter of the node (because of storage).
     // This way because we are using a memory pool.
-    struct Deleter { void operator()(BTNode* n) { n->~BTNode(); } };
+    struct Deleter { void operator()(Node* n) { n->~Node(); } };
 
-    BTNode(BTNode const&)            = delete;
-    BTNode(BTNode &&)                = delete;
-    BTNode& operator=(BTNode const&) = delete;
-    BTNode& operator=(BTNode &&)     = delete;
+    Node(Node const&)            = delete;
+    Node(Node &&)                = delete;
+    Node& operator=(Node const&) = delete;
+    Node& operator=(Node &&)     = delete;
 
     // Virtual functions.
     // run
@@ -45,8 +43,8 @@ struct BTNode
 
 // ------------------------------------------------------------------
 // -- Concept
-struct BTNode;
-template <typename type_t>
-concept BTNodeType_t = std::derived_from<type_t, BTNode>;
+struct Node;
+template <typename T>
+concept NodeType_t = std::derived_from<T, Node>;
 
 #endif
