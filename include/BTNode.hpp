@@ -9,18 +9,18 @@
 // ------------------------------------------------------------------
 // -- BTNode
 template <Node::Childs type_t>
-struct BTNode : Node
+struct BTNode final : Node
 {
     using value_type = Node*;
     using container_type = std::vector<value_type>;
 
     // Ctor.
-    constexpr BTNode(std::initializer_list<value_type> l)
+    constexpr BTNode(std::initializer_list<value_type> l) noexcept
         : nodes_{l}
     { }
 
     // run
-    Status run(Player_t& player) noexcept final
+    constexpr Status run(Player_t& player) noexcept
     {
         if( currNodeIt_ == nodes_.end() )
             resetSeq();
@@ -36,7 +36,7 @@ struct BTNode : Node
 
 private:
     // moveIt
-    constexpr void moveIt()
+    constexpr void moveIt() noexcept
     {
         if(++currNodeIt_ == nodes_.end())
             resetSeq();
