@@ -20,7 +20,7 @@ struct BTNode final : Node
     { }
 
     // run
-    constexpr Status run(Player_t& player) noexcept
+    Status run(Player_t& player) noexcept
     {
         if( currNodeIt_ == nodes_.end() )
             resetSeq();
